@@ -121,10 +121,19 @@ ul.good li::before{background:var(--green);box-shadow:0 0 8px var(--green)}
 .call p{margin:0 0 8px}.call p:last-child{margin:0}
 
 /* Herramientas */
-.tools{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:14px}
-.tool-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.tools .btn{font-size:.72rem;padding:.4rem .85rem}
+.tools{padding-top:14px}
+.rule-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:-8px}
+.rule-actions .btn{font-size:.72rem;padding:.4rem .85rem}
 .search{width:100%;min-width:0;position:relative}
+.results{position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:25;max-height:min(60vh,420px);overflow:auto;background:rgba(7,13,25,.98);border:1px solid rgba(255,119,196,.5);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.6);padding:6px}
+.res{display:block;width:100%;text-align:left;font:inherit;background:none;border:0;color:var(--text);padding:10px 12px;border-radius:10px;cursor:pointer;min-width:0}
+.res:hover,.res:focus-visible{background:rgba(63,230,255,.1);outline:none}
+.res b{display:block;color:var(--cyan);font-size:.8rem;letter-spacing:.05em;text-transform:uppercase}
+.res em{display:block;font-style:normal;color:var(--pink);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
+.res span{display:block;color:var(--muted);font-size:.8rem;margin-top:4px;line-height:1.45}
+.res-none{padding:12px;color:var(--muted);font-size:.85rem;text-align:center}
+.rule{scroll-margin-top:90px}
+.rule.flash{box-shadow:0 0 0 2px var(--cyan),0 0 26px rgba(63,230,255,.4)}
 .search input{
   width:100%;font:inherit;font-size:.88rem;color:var(--text);background:rgba(8,16,30,.8);border:1px solid rgba(255,119,196,.45);
   border-radius:999px;padding:.62rem 1.2rem;
@@ -173,10 +182,6 @@ footer svg{width:44px;height:auto}
 <header class="hero" id="inicio" aria-label="Ghetto Roleplay">
   <div class="hero-in">
     <p>Reglamento General</p>
-    <div class="hero-btns">
-      <a class="btn solid" href="#normas">Leer las normas</a>
-      <a class="btn pink" href="#vip">Normativa VIP</a>
-    </div>
   </div>
 </header>
 
@@ -193,11 +198,7 @@ footer svg{width:44px;height:auto}
 
 <div class="wrap">
   <div class="tools">
-    <div class="search"><input id="q" type="search" placeholder="Buscar una regla (ej. CK, vehículos, VIP)" aria-label="Buscar una regla" autocomplete="off"></div>
-    <div class="tool-btns">
-      <button class="btn" id="open-all" type="button">Expandir todo</button>
-      <button class="btn pink" id="close-all" type="button">Contraer todo</button>
-    </div>
+    <div class="search"><input id="q" type="search" placeholder="Buscar una regla (ej. CK, vehículos, VIP)" aria-label="Buscar una regla" autocomplete="off"><div class="results" id="results" hidden></div></div>
   </div>
 </div>
 
@@ -310,6 +311,10 @@ footer svg{width:44px;height:auto}
   </div>
 
   <p class="sub">¿En qué consiste el roleplay?</p>
+  <div class="rule-actions">
+    <button class="btn" id="open-all" type="button">Expandir todo</button>
+    <button class="btn pink" id="close-all" type="button">Contraer todo</button>
+  </div>
   <div class="rules">
     <details class="rule"><summary><span class="rt">Qué es el roleplay</span><span class="chip cyan">Base</span></summary><div class="rb">
       <p>El roleplay consiste en crear un personaje y un papel para ese personaje. Se trata de adaptarse a él e imaginar cómo actuaría tu personaje si existiera en la vida real. Debes meterte en la piel de tu personaje; por ello, es recomendable conocer bien su historia antes de crearlo para cumplir con sus rasgos y características. Además, debes ajustar sus vehículos y propiedades al rol que desempeñas.</p>
@@ -644,8 +649,7 @@ footer svg{width:44px;height:auto}
       <p>Todo aquel usuario que permanezca AFK será vulnerable de cara al rol de terceros, pudiendo caer fácilmente en una situación de robo o secuestro siempre que se descuide. El estar AFK no está permitido y no te hace inmune ante cualquier interacción, sino todo lo contrario.</p>
     </div></details>
   </div>
-  <div class="none" id="none">No hay reglas que coincidan con tu búsqueda.</div>
-</section>
+  </section>
 
 </main>
 </div>
@@ -796,19 +800,42 @@ footer svg{width:44px;height:auto}
 <script>
 (function(){
   var rules=[].slice.call(document.querySelectorAll('.rule'));
-  var q=document.getElementById('q'),none=document.getElementById('none');
+  var q=document.getElementById('q'),box=document.getElementById('results');
   document.getElementById('open-all').addEventListener('click',function(){rules.forEach(function(r){if(!r.hidden)r.open=true})});
   document.getElementById('close-all').addEventListener('click',function(){rules.forEach(function(r){r.open=false})});
   function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')}
   q.addEventListener('input',function(){
-    var v=norm(q.value.trim()),shown=0;
+    var v=norm(q.value.trim());
+    box.innerHTML='';
+    if(v.length<2){box.hidden=true;return}
+    var hits=[];
     rules.forEach(function(r){
-      var hit=!v||norm(r.textContent).indexOf(v)>-1;
-      r.hidden=!hit;
-      if(hit){shown++;if(v)r.open=true}else r.open=false;
+      var t=r.querySelector('.rt').textContent,nt=norm(t),body=r.textContent.replace(/\s+/g,' ').trim(),nb=norm(body),i=nb.indexOf(v);
+      if(i<0)return;
+      var s=Math.max(0,i-35),snip=(s>0?'…':'')+body.slice(s,i+v.length+70).trim()+'…';
+      hits.push({r:r,t:t,snip:nt.indexOf(v)>-1?'':snip,rank:nt.indexOf(v)>-1?0:1,sec:r.closest('section').querySelector('h2').textContent});
     });
-    none.style.display=(v&&!shown)?'block':'none';
+    hits.sort(function(a,b){return a.rank-b.rank});
+    if(!hits.length){box.innerHTML='<div class="res-none">No hay reglas con “'+q.value.replace(/[<>&]/g,'')+'”.</div>';box.hidden=false;return}
+    hits.slice(0,12).forEach(function(h){
+      var b=document.createElement('button');b.type='button';b.className='res';
+      var x=document.createElement('b');x.textContent=h.t;b.appendChild(x);
+      var e=document.createElement('em');e.textContent=h.sec;b.appendChild(e);
+      if(h.snip){var sp=document.createElement('span');sp.textContent=h.snip;b.appendChild(sp)}
+      b.addEventListener('click',function(){go(h.r)});
+      box.appendChild(b);
+    });
+    box.hidden=false;
   });
+  function go(r){
+    box.hidden=true;r.open=true;r.scrollIntoView({block:'start'});
+    r.classList.add('flash');setTimeout(function(){r.classList.remove('flash')},1800);
+  }
+  q.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){box.hidden=true}
+    if(e.key==='Enter'){var f=box.querySelector('.res');if(f)f.click()}
+  });
+  document.addEventListener('click',function(e){if(!e.target.closest('.search'))box.hidden=true});
   var links=[].slice.call(document.querySelectorAll('.nav a'));
   var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
   var ids=['inicio','normas','general','calle','conceptos','vip'];
