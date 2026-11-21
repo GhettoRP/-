@@ -121,9 +121,9 @@ ul.good li::before{background:var(--green);box-shadow:0 0 8px var(--green)}
 .call p{margin:0 0 8px}.call p:last-child{margin:0}
 
 /* Herramientas */
-.tools{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:14px}
-.tool-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.tools .btn{font-size:.72rem;padding:.4rem .85rem}
+.tools{padding-top:14px}
+.rule-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:-8px}
+.rule-actions .btn{font-size:.72rem;padding:.4rem .85rem}
 .search{width:100%;min-width:0;position:relative}
 .search input{
   width:100%;font:inherit;font-size:.88rem;color:var(--text);background:rgba(8,16,30,.8);border:1px solid rgba(255,119,196,.45);
@@ -194,10 +194,6 @@ footer svg{width:44px;height:auto}
 <div class="wrap">
   <div class="tools">
     <div class="search"><input id="q" type="search" placeholder="Buscar una regla (ej. CK, vehículos, VIP)" aria-label="Buscar una regla" autocomplete="off"></div>
-    <div class="tool-btns">
-      <button class="btn" id="open-all" type="button">Expandir todo</button>
-      <button class="btn pink" id="close-all" type="button">Contraer todo</button>
-    </div>
   </div>
 </div>
 
@@ -310,6 +306,10 @@ footer svg{width:44px;height:auto}
   </div>
 
   <p class="sub">¿En qué consiste el roleplay?</p>
+  <div class="rule-actions">
+    <button class="btn" id="open-all" type="button">Expandir todo</button>
+    <button class="btn pink" id="close-all" type="button">Contraer todo</button>
+  </div>
   <div class="rules">
     <details class="rule"><summary><span class="rt">Qué es el roleplay</span><span class="chip cyan">Base</span></summary><div class="rb">
       <p>El roleplay consiste en crear un personaje y un papel para ese personaje. Se trata de adaptarse a él e imaginar cómo actuaría tu personaje si existiera en la vida real. Debes meterte en la piel de tu personaje; por ello, es recomendable conocer bien su historia antes de crearlo para cumplir con sus rasgos y características. Además, debes ajustar sus vehículos y propiedades al rol que desempeñas.</p>
