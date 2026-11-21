@@ -75,7 +75,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nav-in{max-width:980px;margin:0 auto;display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none}
 .nav-in::-webkit-scrollbar{display:none}
 .nav a{
-  flex:none;font-size:.8rem;font-weight:700;letter-spacing:.05em;color:var(--muted);text-decoration:none;
+  flex:1 0 auto;text-align:center;font-size:.8rem;font-weight:700;letter-spacing:.05em;color:var(--muted);text-decoration:none;
   padding:.5rem 1rem;border-radius:999px;border:1px solid var(--line);transition:all .2s;
 }
 .nav a:hover{color:#fff;border-color:rgba(63,230,255,.6)}
@@ -121,13 +121,13 @@ ul.good li::before{background:var(--green);box-shadow:0 0 8px var(--green)}
 .call p{margin:0 0 8px}.call p:last-child{margin:0}
 
 /* Herramientas */
-.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end;padding-top:14px}
+.tools{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:14px}
+.tool-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .tools .btn{font-size:.72rem;padding:.4rem .85rem}
-.search{flex:0 1 200px;min-width:0;position:relative}
-@media (max-width:520px){.search{flex:1 1 140px}}
+.search{width:100%;min-width:0;position:relative}
 .search input{
-  width:100%;font:inherit;font-size:.8rem;color:var(--text);background:rgba(8,16,30,.8);border:1px solid rgba(255,119,196,.45);
-  border-radius:999px;padding:.45rem .95rem;
+  width:100%;font:inherit;font-size:.88rem;color:var(--text);background:rgba(8,16,30,.8);border:1px solid rgba(255,119,196,.45);
+  border-radius:999px;padding:.62rem 1.2rem;
 }
 .search input::placeholder{color:var(--muted)}
 .none{display:none;text-align:center;color:var(--muted);padding:12px}
@@ -193,9 +193,11 @@ footer svg{width:44px;height:auto}
 
 <div class="wrap">
   <div class="tools">
-    <div class="search"><input id="q" type="search" placeholder="Buscar regla…" aria-label="Buscar una regla" autocomplete="off"></div>
-    <button class="btn" id="open-all" type="button">Expandir todo</button>
-    <button class="btn pink" id="close-all" type="button">Contraer todo</button>
+    <div class="search"><input id="q" type="search" placeholder="Buscar una regla (ej. CK, vehículos, VIP)" aria-label="Buscar una regla" autocomplete="off"></div>
+    <div class="tool-btns">
+      <button class="btn" id="open-all" type="button">Expandir todo</button>
+      <button class="btn pink" id="close-all" type="button">Contraer todo</button>
+    </div>
   </div>
 </div>
 
