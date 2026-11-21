@@ -806,7 +806,7 @@ footer svg{width:44px;height:auto}
   var links=[].slice.call(document.querySelectorAll('.nav a'));
   var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
   var ids=['inicio','normas','general','calle','conceptos','vip'];
-  function setOn(id){links.forEach(function(a){a.classList.remove('on')});if(map[id]){map[id].classList.add('on');map[id].scrollIntoView({block:'nearest',inline:'center'})}}
+  function setOn(id){links.forEach(function(a){a.classList.remove('on')});if(map[id]){var a=map[id];a.classList.add('on');var bar=a.parentNode;if(bar.scrollWidth>bar.clientWidth){bar.scrollLeft=a.offsetLeft-(bar.clientWidth-a.offsetWidth)/2}}}
   function onScroll(){
     var cur='inicio',y=window.scrollY+110;
     ids.forEach(function(id){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+window.scrollY<=y)cur=id});
