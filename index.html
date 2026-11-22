@@ -175,18 +175,38 @@ footer svg{width:44px;height:auto}
 .up{font-size:.78rem}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 @media (max-width:520px){body{font-size:14.5px}.rule summary{padding:13px 14px;font-size:.84rem}.rb{padding:2px 14px 16px}}
+
+/* Modos: reglas generales / policía */
+.modes{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.mode{font:inherit;font-weight:700;font-size:.9rem;letter-spacing:.05em;color:#fff;cursor:pointer;padding:.7rem 1.45rem;border-radius:999px;border:1px solid rgba(255,119,196,.6);background:rgba(8,16,30,.72);transition:box-shadow .2s,border-color .2s}
+.mode:hover{border-color:var(--cyan);box-shadow:0 0 16px rgba(63,230,255,.45)}
+.mode.on{background:linear-gradient(90deg,var(--pink-hot),#b44bff 55%,var(--cyan));border-color:transparent;color:#05080f;box-shadow:0 0 22px rgba(255,47,165,.45)}
+.mode:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+/* Tablas */
+.tbl{overflow-x:auto;border-radius:10px;border:1px solid var(--line)}
+.tbl table{width:100%;border-collapse:collapse;font-size:.85rem}
+.tbl th{background:linear-gradient(90deg,rgba(255,47,165,.3),rgba(63,230,255,.24));color:#fff;text-align:left;padding:.6rem .8rem;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.tbl td{padding:.55rem .8rem;border-top:1px solid var(--line);vertical-align:top}
+.tbl tbody tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+.tbl td.c{font-family:'DejaVu Sans Mono',ui-monospace,Menlo,Consolas,monospace;color:var(--cyan);font-weight:700;white-space:nowrap}
+.rb ul ul{margin-top:8px}
+.rb ul ul li::before{background:var(--pink);box-shadow:0 0 8px var(--pink)}
 </style>
 </head>
 <body>
 
 <header class="hero" id="inicio" aria-label="Ghetto Roleplay">
   <div class="hero-in">
-    <p>Reglamento General</p>
+    <p id="hero-title">Reglamento General</p>
+    <div class="modes" role="group" aria-label="Tipo de reglamento">
+      <button class="mode on" data-mode="general" type="button" aria-pressed="true">Reglas generales</button>
+      <button class="mode" data-mode="police" type="button" aria-pressed="false">Reglas de la policía</button>
+    </div>
   </div>
 </header>
 
 <nav class="nav" aria-label="Secciones">
-  <div class="nav-in">
+  <div class="nav-in" id="nav-general">
     <a href="#inicio">Inicio</a>
     <a href="#normas">Normas</a>
     <a href="#general">Normativa general</a>
@@ -194,14 +214,23 @@ footer svg{width:44px;height:auto}
     <a href="#conceptos">Conceptos de rol</a>
     <a href="#vip">Normativa VIP</a>
   </div>
+  <div class="nav-in" id="nav-police" hidden>
+    <a href="#p-institucion">Institución</a>
+    <a href="#p-servicio">Servicio</a>
+    <a href="#p-fuerza">Fuerza y detenciones</a>
+    <a href="#p-operativos">Operativos</a>
+    <a href="#p-codigos">Códigos radiales</a>
+    <a href="#p-conducta">Conducta y sanciones</a>
+  </div>
 </nav>
 
 <div class="wrap">
   <div class="tools">
-    <div class="search"><input id="q" type="search" placeholder="Buscar una regla (ej. CK, vehículos, VIP)" aria-label="Buscar una regla" autocomplete="off"><div class="results" id="results" hidden></div></div>
+    <div class="search"><input id="q" type="search" placeholder="Buscar una regla (ej. CK, vehículos, sniper)" aria-label="Buscar una regla" autocomplete="off"><div class="results" id="results" hidden></div></div>
   </div>
 </div>
 
+<div class="pane" id="pane-general" data-label="Reglas generales">
 <div class="wrap">
 <main>
 
@@ -312,8 +341,8 @@ footer svg{width:44px;height:auto}
 
   <p class="sub">¿En qué consiste el roleplay?</p>
   <div class="rule-actions">
-    <button class="btn" id="open-all" type="button">Expandir todo</button>
-    <button class="btn pink" id="close-all" type="button">Contraer todo</button>
+    <button class="btn" data-act="open" type="button">Expandir todo</button>
+    <button class="btn pink" data-act="close" type="button">Contraer todo</button>
   </div>
   <div class="rules">
     <details class="rule"><summary><span class="rt">Qué es el roleplay</span><span class="chip cyan">Base</span></summary><div class="rb">
@@ -786,7 +815,128 @@ footer svg{width:44px;height:auto}
 </section>
 
 </main>
+</div>
+</div>
 
+<!-- POLICÍA -->
+<div class="pane" id="pane-police" data-label="Policía" hidden>
+<div class="wrap">
+<main>
+
+<section class="sec" id="p-institucion">
+  <h2>Normativa de la policía</h2>
+  <p class="eyebrow">Una sola institución · Una cadena de mando · Un protocolo · Un mismo estándar de servicio</p>
+  <div class="panel">
+    <p><span class="cy">Documento oficial de conducta y procedimientos:</span> esta normativa unifica y reemplaza las disposiciones anteriores del cuerpo policial dentro de Ghetto RP. Su cumplimiento es obligatorio para todos los integrantes sin distinción de rango; el desconocimiento de estas reglas no exime de sanciones administrativas y/o de rol.</p>
+  </div>
+  <div class="rule-actions">
+    <button class="btn" data-act="open" type="button">Expandir todo</button>
+    <button class="btn pink" data-act="close" type="button">Contraer todo</button>
+  </div>
+  <div class="rules">
+    <details class="rule"><summary><span class="rt">1. Disposiciones generales</span></summary><div class="rb">
+<p>La Policía de Ghetto RP es la única institución encargada de mantener el orden público, proteger a la ciudadanía, atender alertas, prevenir delitos y desarrollar procedimientos policiales dentro del servidor.</p><ul><li>Todo procedimiento debe desarrollarse mediante rol, respetando el entorno, la vida de los participantes y las reglas generales del servidor.</li><li>Ningún funcionario está por encima de esta normativa. El rango implica responsabilidad y liderazgo, no privilegios para incumplir reglas.</li><li>Las instrucciones de la Directiva y del H50 de turno deberán respetarse, siempre que no contradigan la normativa general.</li><li>Las situaciones no contempladas serán evaluadas por la Directiva o por la administración, según corresponda.</li><li>La institución está ambientada en República Dominicana dentro del universo de Ghetto RP. Las referencias a procedimientos, cargos y dependencias se interpretan como elementos de rol del servidor.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">2. Estructura de rangos y cadena de mando</span></summary><div class="rb">
+<p>Queda estrictamente prohibido desobedecer una orden emitida por un superior jerárquico, siempre que dicha orden no implique incumplir las normativas vigentes de la ciudad o del cuerpo policial. La jerarquía institucional queda organizada de menor a mayor de la siguiente manera:</p><div class="tbl"><table><thead><tr><th>Orden</th><th>Rango</th><th>Orden</th><th>Rango</th></tr></thead><tbody><tr><td class="c">1</td><td>Cadete</td><td class="c">10</td><td>Mayor</td></tr><tr><td class="c">2</td><td>Oficial</td><td class="c">11</td><td>Teniente Coronel</td></tr><tr><td class="c">3</td><td>Sargento Segundo</td><td class="c">12</td><td>Coronel</td></tr><tr><td class="c">4</td><td>Sargento Primero</td><td class="c">13</td><td>Mayor General</td></tr><tr><td class="c">5</td><td>Sargento Mayor</td><td class="c">14</td><td>Teniente General</td></tr><tr><td class="c">6</td><td>2do. Teniente</td><td class="c">15</td><td>Sub-Comisionado</td></tr><tr><td class="c">7</td><td>1er. Teniente</td><td class="c">16</td><td>Comisionado</td></tr><tr><td class="c">8</td><td>Instructor</td><td class="c">17</td><td>Jefe de la Policía</td></tr><tr><td class="c">9</td><td>Capitán</td><td class="c">18</td><td>Ministro de Justicia / Ministro de la Policía</td></tr></tbody></table></div><h4>Responsabilidades de mando</h4><ul><li><b>Cadete:</b> Formación y patrullaje únicamente acompañado de un agente de rango superior. No puede patrullar solo ni acudir a robos sin autorización de un superior. (Excepción: si es el único policía en servicio, podrá patrullar solo evitando zonas de alto riesgo).</li><li><b>Oficiales y Suboficiales:</b> Cumplir procedimientos, apoyar unidades y orientar a los rangos inferiores.</li><li><b>Instructores:</b> Apoyar la formación, evaluar conocimientos y comunicar avances a sus superiores.</li><li><b>Oficiales de Mando:</b> Organizar turnos, unidades, operativos y asignaciones conforme a las instrucciones de la Directiva.</li><li><b>Comisionado, Jefe de la Policía y Ministro de Justicia / Ministro de la Policía:</b> Máxima dirección institucional y decisiones administrativas. La facultad de bajar rangos corresponde exclusivamente a la Directiva.</li><li><b>H50 (Mando Operativo de Turno):</b> Asigna grupos, coordina frecuencias y autoriza acciones especiales cuando la normativa así lo exige.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">3. Proceso de reclutamiento y formación</span></summary><div class="rb">
+<p>Para formar parte de la Policía de Ghetto RP, los aspirantes deben cumplir los estándares institucionales y superar las pruebas de aptitud correspondientes:</p><ul><li><b>Requisitos de admisión:</b> Ser mayor de 16 años (OOC); expediente limpio sin multas pendientes, antecedentes penales ni procesos judiciales abiertos; disponer de licencia de armas y licencia de vehículo en vigor; y superar el reconocimiento médico.</li><li><b>Solicitud y Fase Teórica:</b> Abrir ticket en la web institucional para solicitar convocatoria. La evaluación teórica comprende entrevista personal, examen de conocimientos y resolución de supuestos cotidianos de servicio.</li><li><b>Fase Práctica (Periodo de Prueba):</b> Tras aprobar la fase teórica, el aspirante ingresa como Cadete durante una semana bajo evaluación constante de un instructor. Se valorará la actitud, el dominio de los códigos radiales y el respeto a la jerarquía para su ascenso a Oficial.</li></ul>
+    </div></details>
+  </div>
+</section>
+
+<section class="sec" id="p-servicio">
+  <h2>Servicio y patrullaje</h2>
+  <p class="eyebrow">Capítulos 4 a 6</p>
+  <div class="rules">
+    <details class="rule"><summary><span class="rt">4. Ingreso, servicio y gestión interna</span><span class="chip cyan">Obligatorio</span></summary><div class="rb">
+<ul><li><b>Identificación obligatoria:</b> Todo agente deberá identificarse con su número de placa y rango ante cualquier ciudadano que lo solicite, manteniendo una actitud respetuosa y acorde al rol.</li><li><b>Conexión y registro:</b> Antes de iniciar turno, todo agente deberá registrarse en la frecuencia de asignación de la MDT/TAC, conectarse obligatoriamente a la radio policial y esperar instrucciones del H50.</li><li><b>Equipamiento y registro de armas:</b> Usar el uniforme y equipamiento autorizado. Es obligatorio registrar el número de serie de toda arma nueva asignada en el sistema de fichaje correspondiente.</li><li><b>Grabación de pantalla:</b> Es obligatorio grabar la pantalla durante todo el servicio y los procedimientos, conservando el material para aclarar reportes o investigaciones.</li><li><b>Inactividad y horas de servicio:</b> Queda totalmente prohibido permanecer AFK estando de servicio activo sin autorización (sanción interna administrativa). Cada agente deberá cumplir un mínimo de 8 horas semanales de servicio, salvo excepción justificada por un superior.</li><li><b>Fuera de servicio:</b> Al finalizar turno, informar salida de servicio y devolver o guardar el material institucional. Fuera de servicio está terminantemente prohibido portar armamento policial, equipamiento táctico, actuar como encubierto, utilizar vehículos oficiales o cometer actos delictivos.</li><li><b>Accesos a comisaría:</b> Las puertas principales permanecerán abiertas salvo en activación de máxima alerta o para controlar personas que fuercen roles irreales o agresivos. Las puertas internas deberán permanecer cerradas.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">5. Jurisdicción, frecuencias y vehículos oficiales</span></summary><div class="rb">
+<ul><li>La institución opera como un solo cuerpo policial en todo el mapa. Las unidades se distribuirán por sectores según las necesidades del servicio e instrucciones del H50.</li><li><b>Distribución oficial de frecuencias de radio:</b><ul><li><b>Frecuencias 1 a 9:</b> Uso exclusivo policial (asignadas por la Directiva/H50 y comunicadas en la MDT o canal oficial).</li><li><b>Frecuencia 10:</b> Uso reservado para operativos conjuntos (cuando la situación operativa lo requiera).</li><li><b>Frecuencias 11 a 20:</b> Rango asignado para EMS (coordinado con el cuerpo médico).</li><li>Ningún funcionario cambiará de frecuencia operativa sin coordinación previa.</li></ul></li><li><b>Uso de vehículos oficiales:</b> Está prohibido prestar vehículos o material policial sin justificación roleada, transportar civiles o conocidos sin motivo justificado, o abusar de la autoridad ignorando normas de tráfico fuera de emergencias reales, persecuciones activas o robos en curso debidamente roleados.</li><li><b>Abandono de vehículos:</b> Queda prohibido abandonar vehículos oficiales bajo cualquier circunstancia. Se deberá solicitar un mecánico en servicio; de no haberlo, rolear llamada a grúa y proceder a la incautación del vehículo.</li><li><b>Seguridad institucional:</b> La Policía podrá brindar seguridad en audiencias, juicios o protestas cuando exista necesidad real de orden público, pero nunca seguridad personal o privada a particulares o funcionarios civiles.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">6. Patrullaje, alertas e intervenciones</span></summary><div class="rb">
+<ul><li>Las unidades patrullarán activamente y atenderán las alertas recibidas. Es obligatorio atender avisos de robos y atracos, salvo que la unidad atienda una intervención de mayor prioridad. Si se escuchan disparos sin recibir alerta ni motivo de intervención, no se incorporará por iniciativa propia.</li><li>Al recibir una alerta, la unidad comunicará su código, ubicación y situación, valorando la cantidad de sospechosos y el riesgo para terceros antes de intervenir.</li><li>Ante un posible enfrentamiento, se actuará con cautela solicitando apoyo antes de iniciar intercambio de disparos, salvo amenaza armada inmediata.</li><li>Los avisos de disparos o actividad sospechosa se tratarán como presuntos sospechosos sin presumir culpabilidad hasta que el rol o la evidencia lo establezcan.</li><li><b>Paradas de tránsito y cacheos:</b> Se podrá detener un vehículo por conducción peligrosa, infracciones relevantes o conducta sospechosa justificada, explicando el motivo. No se podrá cachear a una persona por una simple multa de tránsito ni únicamente por llevar chaleco o máscara. El cacheo preventivo procede cuando exista sospecha razonable, detención, arresto, flagrancia o alerta válida de delito.</li></ul>
+    </div></details>
+  </div>
+</section>
+
+<section class="sec" id="p-fuerza">
+  <h2>Fuerza y detenciones</h2>
+  <p class="eyebrow">Capítulos 7 y 8</p>
+  <div class="rules">
+    <details class="rule"><summary><span class="rt">7. Uso progresivo de la fuerza, armas y muerte en rol</span><span class="chip amber">Importante</span></summary><div class="rb">
+<ul><li><b>Progresividad:</b> La fuerza deberá ser proporcional a la amenaza, priorizando la comunicación, órdenes verbales y herramientas menos letales (porra policial y pistola táser) cuando el civil esté desarmado o se resista sin arma de fuego.</li><li><b>Faltas de respeto:</b> Ante faltas de respeto de un civil, se emitirán hasta tres advertencias verbales antes de proceder a su detención informando sus derechos. Si utiliza violencia, podrá emplearse el táser defensivamente.</li><li><b>Uso del táser frente a armas:</b> Si un individuo apunta con un arma a corta distancia, se priorizará el táser. Si la distancia es considerable y existe riesgo inminente para la vida de un tercero, se autoriza el arma letal reglamentaria.</li><li><b>Armas de fuego:</b> Solo podrán desenfundarse ante amenaza armada real e inmediata (arma de fuego o arma blanca) o cuando el rol agresivo haya sido iniciado por la otra parte. Todo disparo convierte la situación en rol agresivo y debe quedar documentado en grabación.</li><li><b>Objetos confiscados:</b> Armas ilegales, drogas, dinero sucio y herramientas de hackeo se depositarán en el locker de evidencias o se entregarán a un superior. Los objetos legales y el armamento protegido por reglas VIP/coins no podrán retirarse fuera de las excepciones permitidas por el servidor. Está prohibido quitarse los zapatos para obtener ventaja de sigilo.</li><li><b>Abatimiento y memoria en rol (PK):</b> Si un agente cae abatido durante un rol y reaparece en el hospital tras desangrarse, no podrá reincorporarse al enfrentamiento activo; únicamente podrá intervenir en el procesamiento administrativo de los detenidos si un compañero le recuerda los hechos mediante rol válido (aplicando la regla de memoria cuando un compañero te recuerda lo sucedido).</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">8. Detenciones y procesamiento</span></summary><div class="rb">
+<ul><li><b>Comunicaciones del detenido:</b> Al detener a un sujeto se le retirarán los medios de comunicación por seguridad. Si requiere realizar una llamada (de hasta un minuto), esta se efectuará únicamente en comisaría bajo supervisión.</li><li><b>Lectura de derechos:</b> Antes de trasladar o ingresar a una persona a comisaría, se le informará el motivo de la detención y se le leerán sus derechos: guardar silencio (todo lo que diga podrá usarse en su contra), comida, bebida y asistencia sanitaria, abogado (cuando no sea detención en flagrancia), una llamada supervisada de hasta un minuto y no declarar contra sí mismo ni declararse culpable. Si no responde, se repetirán una vez; si no se leen antes del ingreso a comisaría, podrá solicitar habeas corpus.</li><li><b>Registro y condena:</b> En comisaría se roleará el ingreso y cacheo esposado mediante /me y /do, verificando identidad (o lector de huellas), devolviendo armamento legal con licencia no vinculado al delito, registrando multas y antecedentes en la MDT y aplicando el tiempo de prisión correspondiente (celdas de comisaría o traslado a la penal).</li><li>Si el detenido se desangra y reaparece en el hospital, no podrá ser procesado por ese procedimiento al finalizar el rol. No se trasladará a un detenido al hospital para reanimarlo cuando no haya EMS disponible.</li></ul>
+    </div></details>
+  </div>
+</section>
+
+<section class="sec" id="p-operativos">
+  <h2>Robos y operativos</h2>
+  <p class="eyebrow">Capítulos 9 a 14</p>
+  <div class="rules">
+    <details class="rule"><summary><span class="rt">9. Robos, negociaciones y equipamiento táctico</span><span class="chip pink">Robos</span></summary><div class="rb">
+<p>Toda intervención en un robo respetará el rol inicial, el armamento permitido para su categoría y las condiciones acordadas en la negociación. No se cambiará el armamento permitido aunque la persecución se desplace a otra zona.</p><h4>Tabla oficial de cupos y límites por tipo de robo</h4><div class="tbl"><table><thead><tr><th>Tipo de robo</th><th>Delincuentes</th><th>Policías</th><th>Rehenes</th><th>Vehículos</th></tr></thead><tbody><tr><td>Tienditas</td><td>1 a 3</td><td>3 a 5</td><td>1 a 2</td><td>1</td></tr><tr><td>Banco Fleeca</td><td>4 a 6</td><td>6 a 8</td><td>2 a 3</td><td>1 a 2</td></tr><tr><td>Robos Grandes</td><td>8 a 14</td><td>10 a 16</td><td>2 a 5</td><td>2 a 4</td></tr><tr><td>Gran Escala (Máximo)</td><td>14</td><td>16</td><td>2 a 5</td><td>2 a 4</td></tr></tbody></table></div><h4>Regla de proporción numérica policial</h4><ul><li><b>Superioridad estándar (+2):</b> En todos los robos, el despliegue policial será siempre de <b>2 efectivos por encima</b> del número de delincuentes presentes.</li><li><b>Excepción por falta de efectivos:</b> De no haber suficientes policías en servicio para cubrir el margen de +2, la Policía podrá <b>igualar</b> el número de delincuentes. Esta decisión recaerá exclusivamente en el <b>H50</b> o en el encargado del operativo.</li><li><b>Límite absoluto:</b> Bajo ninguna circunstancia podrá haber más delincuentes que policías en un robo.</li></ul><h4>Reglas de francotirador (sniper) y granadas tácticas</h4><ul><li><b>Uso de francotirador (sniper):</b> Permitido <b>únicamente en Robos Grandes</b> (y ataques a comisaría). Solo se autoriza <b>1 policía con sniper</b> por operativo, portando estrictamente <b>1 bala por cada delincuente</b> participante (y Pistol MK2 como arma secundaria).</li><li><b>Negociación del sniper:</b> Para poder negociar o habilitar el uso del francotirador se requieren <b>3 rehenes</b> válidos. Queda prohibido el uso de sniper en tienditas, Banco Fleeca, barrios, ventas de droga o enfrentamientos ordinarios.</li><li><b>Gases lacrimógenos y flashbangs:</b> Su uso queda habilitado <b>únicamente después de transcurridos 15 minutos</b> desde el inicio del robo, con un límite estricto de <b>1 granada (gas lacrimógeno o flashbang) por cada 2 delincuentes</b>.</li></ul><h4>Protocolo de negociación, salida y tiempos</h4><ul><li><b>Aviso y aproximación:</b> La Policía emitirá un aviso perimetral para alejar civiles. El negociador designado se identificará y se aproximará con las manos levantadas.</li><li><b>Validez de rehenes y acuerdos:</b> Toda negociación requiere al menos un rehén válido (no se aceptan integrantes de la misma organización ni mascotas). La vida del rehén tiene prioridad absoluta. Las negociaciones iniciadas no pueden cancelarse unilateralmente; si se rompe una negociación, los asaltantes concederán 60 segundos a la Policía para posicionarse y se notificará el inicio del enfrentamiento.</li><li><b>Intercambios de referencia:</b><ul><li><b>1 rehén:</b> Huida limpia o salida limpia únicamente.</li><li><b>2 rehenes:</b> Helicóptero, dron o flashbang/humo (sujeto a la regla de los 15 minutos y proporción 1 por cada 2 delincuentes).</li><li><b>3 rehenes:</b> Uso de sniper (solo en robos grandes).</li></ul></li><li><b>Huida y salida limpia:</b> En salida limpia no se colocarán pinchos, cajas, vallas ni patrullas bloqueando la salida acordada. El conteo inicia cuando todos los asaltantes están dentro de sus vehículos (hasta 1 segundo por rehén, máximo 3 segundos). En huida limpia se respetarán 3 minutos sin maniobras que perjudiquen la huida; la persecución de un robo no superará los 10 minutos (15 minutos en procedimientos menores y tránsito).</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">10. Persecuciones y maniobra PIT</span></summary><div class="rb">
+<ul><li>La Policía no abrirá fuego durante una persecución por la simple huida de un vehículo; solo disparará si recibe fuego o existe amenaza armada inmediata.</li><li>Se respetarán al menos 2 minutos de persecución limpia sin agresión armada y se emitirán hasta tres órdenes claras de detención por megáfono antes de intervenir.</li><li><b>Maniobra PIT:</b> Requiere autorización expresa del H50 y solo podrá ejecutarse cuando no ponga en peligro a terceros ajenos al rol.</li><li>Si un vehículo pierde o explota una llanta durante la persecución, deberá reducir su velocidad; conducir como si no tuviera daños constituye PowerGaming (PG).</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">11. Drones y helicóptero</span></summary><div class="rb">
+<ul><li><b>Dron policial:</b> Solo podrá utilizarse en robos mayores autorizados (Banco Central y Underground) e investigaciones especiales con autorización de la Directiva. Se permite 1 dron por operativo asignado por el H50 (en limpiezas de barrios podrá autorizarse más de uno) y puede negociarse por 2 rehenes. Deberá mantenerse a una altura mínima de 20 metros, quedando prohibido usarlo para abrir puertas o detectar sujetos escondidos en arbustos. Se permite realizar reconocimiento facial con el dron únicamente si la persona ya ha sido capturada previamente y cuenta con récord policial en la MDT o récord médico.</li><li><b>Helicóptero:</b> Solo podrá emplearse en robos mayores, alertas rojas, códigos de emergencia o ataques a comisaría. Prohibido para patrullaje rutinario. En operativos con rehenes se solicitará autorización para aterrizar en zonas controladas por los asaltantes; de no autorizarse, permanecerá en el aire hasta finalizar la negociación.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">12. Armamento, equipo y enfrentamientos</span></summary><div class="rb">
+<ul><li><b>Límites de inventario:</b> Máximo 1 chaleco antibalas puesto y 3 adicionales en el inventario (encima) por funcionario. Límite de 500 balas de munición por cada calibre. El incumplimiento conlleva limpieza de inventario y warning.</li><li>No se permite disparar desde vehículos o helicópteros sin haber recibido fuego previamente, salvo excepciones autorizadas por administración.</li><li>Ningún abatido podrá solicitar EMS ni abandonar el rol tirando "E" mientras el enfrentamiento siga activo; hacerlo será tomado como evasión de rol y aplicará sanción. Prohibido invadir roles ajenos.</li><li>Se priorizará la vida del compañero evitando enfrentamientos en clara inferioridad numérica, solicitando refuerzos con criterio.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">13. Barrios, GW callejeras y venta de drogas</span></summary><div class="rb">
+<ul><li><b>Barrios (sujeto a confirmación de actividad):</b> La regulación de barrios queda pendiente de confirmación oficial sobre su activación en el servidor (en caso de no haber barrios activos, este apartado quedará sin efecto). De estar activos, la Policía intervendrá ante alerta válida o riesgo para civiles con un máximo de 18 integrantes y sin exceder en más de 3 la cantidad indicada en la alerta, cesando el fuego al llegar para dialogar o negociar condiciones.</li><li><b>GW callejeras:</b> Solo se ingresará con entorno válido de la organización ganadora indicando cantidad y armamento. La Policía asistirá con una cantidad igual o de hasta 1 funcionario más que lo indicado, esperando 3 minutos para el cierre del rol y salida. Si la Policía gana, no revisará el inventario de los vehículos.</li><li><b>Venta de drogas:</b> Requiere al menos 4 policías activos y los vendedores serán como mínimo 1 menos que los policías disponibles. Debe enviarse entorno al iniciar; si se elige persecución, se respetan 3 minutos sin disparar salvo agresión previa. Si ganan los vendedores, disponen de 15 minutos para continuar vendiendo antes de enviar nuevo entorno. Prohibido vender en techos, zonas de difícil acceso o usar drones, flashbang, humo, sniper o helicópteros. Si están desarmados, se empleará táser.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">14. Secuestros</span></summary><div class="rb">
+<ul><li><b>Secuestro de funcionarios:</b> Requiere al menos 8 policías activos por cada oficial secuestrado, un rol previo que justifique el motivo, una leve investigación previa (nombre, apellido y placa) y envío de entorno. En el operativo de rescate podrán acudir todos los policías que se encuentren activos en servicio. El rescate negociable tiene como referencia actual hasta $1.000.000 IC para rangos operativos y $2.000.000 IC para mandos superiores (o hasta 40 chalecos o 2.500 balas 9 mm por funcionario), montos sujetos a ajuste por la Directiva conforme al estado económico del servidor. Tras el intercambio en un mismo punto inicia persecución obligatoria; el enfrentamiento inicia y termina en el norte del mapa sin que los delictivos superen a los policías disponibles.</li><li><b>Secuestro de civiles:</b> Requiere envío de entorno al inicio y verificación de disponibilidad policial, permitiendo hasta 10 rehenes. En ciudad rige limitación de armas cortas salvo negociación; el sniper requiere autorización de Directivo o H50.</li></ul>
+    </div></details>
+  </div>
+</section>
+
+<section class="sec" id="p-codigos">
+  <h2>Alertas y códigos</h2>
+  <p class="eyebrow">Capítulo 15</p>
+  <div class="rules">
+    <details class="rule"><summary><span class="rt">15. Niveles de alerta y códigos radiales oficiales</span><span class="chip cyan">Códigos</span></summary><div class="rb">
+<p>El uso de los códigos radiales reglamentarios es obligatorio para todo el personal en servicio. La comunicación clara y estandarizada garantiza el orden operativo y evita sanciones internas.</p><h4>Niveles de alerta ciudadana</h4><ul><li><b>Alerta Blanca:</b> La ciudad vuelve a la normalidad.</li><li><b>Alerta Amarilla:</b> Advertencia de posible actividad de bandas u organizaciones delictivas.</li><li><b>Alerta Verde:</b> Búsqueda de personas; habilita solicitud de identificación conforme al rol.</li><li><b>Alerta Azul:</b> Búsqueda de funcionarios desaparecidos o secuestrados.</li><li><b>Alerta Roja:</b> Toque de queda por enfrentamientos masivos; habilita medidas extraordinarias de control y armamento.</li><li><b>Alerta Negra:</b> Situación de máximo riesgo coordinada por el mando especializado y la Directiva (no autoriza abatir indiscriminadamente).</li></ul><h4>Códigos radiales 10 (claves base actualizadas)</h4><div class="tbl"><table><thead><tr><th>Código</th><th>Significado</th><th>Código</th><th>Significado</th></tr></thead><tbody><tr><td class="c">10-0</td><td>Prueba de radio</td><td class="c">10-12</td><td>Permiso para hablar (Responde: "22")</td></tr><tr><td class="c">10-02</td><td>Sí te escucho (Respuesta al 10-0)</td><td class="c">10-14</td><td>Sujeto sospechoso</td></tr><tr><td class="c">10-04</td><td>Afirmativo</td><td class="c">10-15</td><td>Sujeto bajo custodia</td></tr><tr><td class="c">10-05</td><td>Negativo</td><td class="c">10-20</td><td>Ubicación</td></tr><tr><td class="c">10-06</td><td>Parada de tráfico</td><td class="c">10-22</td><td>Regreso a Central</td></tr><tr><td class="c">10-08</td><td>Espera de asignación</td><td class="c">10-23</td><td>Mantenerse en espera</td></tr><tr><td class="c">10-09</td><td>Repetir mensaje</td><td class="c">10-25</td><td>Traslado a Central</td></tr><tr><td class="c">10-10</td><td>Finalización de servicio</td><td class="c">—</td><td>—</td></tr></tbody></table></div><h4>Códigos 10 complementarios</h4><div class="tbl"><table><thead><tr><th>Código</th><th>Significado</th><th>Código</th><th>Significado</th></tr></thead><tbody><tr><td class="c">10-1</td><td>Extracción de emergencia</td><td class="c">10-39</td><td>Atentado terrorista</td></tr><tr><td class="c">10-3</td><td>Solicitar información</td><td class="c">10-40</td><td>Situación con rehenes</td></tr><tr><td class="c">10-27</td><td>Información del sujeto</td><td class="c">10-41</td><td>Tirador activo</td></tr><tr><td class="c">10-28</td><td>Información del vehículo</td><td class="c">10-42</td><td>Sospechosos barricados</td></tr><tr><td class="c">10-29</td><td>Vehículo robado</td><td class="c">10-43</td><td>Solicitar equipo táctico</td></tr><tr><td class="c">10-32</td><td>Solicitar refuerzos</td><td class="c">10-44</td><td>Solicitar helicóptero</td></tr><tr><td class="c">10-33</td><td>Retomar patrullaje</td><td class="c">10-45</td><td>Vigilancia</td></tr><tr><td class="c">10-35</td><td>Reporte de situación</td><td class="c">10-50</td><td>Venta de drogas</td></tr><tr><td class="c">10-37</td><td>Solicitar grúa</td><td class="c">10-54</td><td>Cadáver</td></tr><tr><td class="c">10-38</td><td>Solicitar ambulancia</td><td class="c">10-55</td><td>Falsa alarma</td></tr><tr><td class="c">10-78</td><td>Oficial en peligro</td><td class="c">10-95</td><td>Procesamiento del sujeto</td></tr><tr><td class="c">10-97</td><td>En camino</td><td class="c">10-98</td><td>Asignación finalizada</td></tr></tbody></table></div><h4>Códigos penales / mono y operativos</h4><div class="tbl"><table><thead><tr><th>Código</th><th>Significado</th><th>Código</th><th>Significado</th></tr></thead><tbody><tr><td class="c">148</td><td>Resistencia al arresto</td><td class="c">417</td><td>Persona armada</td></tr><tr><td class="c">187</td><td>Homicidio</td><td class="c">419</td><td>Falsa alarma</td></tr><tr><td class="c">207</td><td>Secuestro</td><td class="c">420</td><td>Posesión de drogas</td></tr><tr><td class="c">210</td><td>Detención de tránsito</td><td class="c">459</td><td>Allanamiento</td></tr><tr><td class="c">211</td><td>Robo a mano armada</td><td class="c">487 / 487V</td><td>Robo pequeño / Robo de vehículo</td></tr><tr><td class="c">212</td><td>Manifestación</td><td class="c">488</td><td>Robo mediano</td></tr><tr><td class="c">215</td><td>Disparos en el lugar</td><td class="c">489</td><td>Robo mayor</td></tr><tr><td class="c">240</td><td>Intento de robo</td><td class="c">502</td><td>Conducir bajo influencia</td></tr><tr><td class="c">245</td><td>Asalto con armas mortales</td><td class="c">Código 1 / 2</td><td>Última alerta / Rutina con luces</td></tr><tr><td class="c">254V / 254P</td><td>Persecución vehicular / a pie</td><td class="c">Código 3 / 4</td><td>Emergencia luces y sirena / Controlado</td></tr><tr><td class="c">288 / 311</td><td>Alteración del orden / Exhibicionismo</td><td class="c">Código 5 / 6</td><td>Proceso detención / Solicitar refuerzos</td></tr><tr><td class="c">415</td><td>Disturbios o peleas</td><td class="c">Código 7 / 9 / 11</td><td>Parada breve / Médica / Búsqueda y captura</td></tr></tbody></table></div>
+    </div></details>
+  </div>
+</section>
+
+<section class="sec" id="p-conducta">
+  <h2>Conducta y sanciones</h2>
+  <p class="eyebrow">Capítulos 16 a 20</p>
+  <div class="rules">
+    <details class="rule"><summary><span class="rt">16. Licencia de armas y armamento legal</span></summary><div class="rb">
+<ul><li>Solo se consideran armas legales aquellas estipuladas en el Código Penal vigente y cubiertas por la licencia tramitada ante la Directiva o personal autorizado.</li><li>Requisitos: multas pagadas, más de 30 días sin nuevas infracciones y certificado psicológico emitido tras cita en el hospital.</li><li>Portar un arma no cubierta conlleva el retiro de la licencia. El armamento VIP no podrá ser robado ni retirado de forma ordinaria, salvo que el portador participe en actos delictivos conforme a las excepciones de administración.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">17. Investigaciones, corrupción y desmantelamiento</span><span class="chip red">Sanción grave</span></summary><div class="rb">
+<ul><li><b>Investigaciones contra organizaciones delictivas:</b> Requieren investigación IC documentada con antigüedad mínima de 1 mes (nombre, fotos IC de al menos 8 integrantes activos, distintivos, ubicación de HQ obtenida mediante rol —estando permitido el uso de dron policial—, grabaciones de interrogatorios con al menos 4 corroboraciones y 10 antecedentes penales individuales de robos medianos o mayores) validada por administración para autorizar wipe. La Policía podrá acudir con hasta 5 integrantes más que los miembros involucrados.</li><li><b>Investigaciones contra funcionarios:</b> Requieren investigación IC de al menos 15 días aprobada por administración, con participación equivalente entre Policía y organización delictiva.</li><li><b>Corrupción:</b> Queda terminantemente prohibido realizar actos ilegales, colaborar con bandas, filtrar información (chivatazos), aceptar sobornos o almacenar armas y material policial en propiedades o vehículos personales. Se realizarán inspecciones periódicas de armarios y patrullas.</li><li><b>Sanción por corrupción:</b> Expulsión inmediata mediante <b>CK Administrativo</b> sin derecho a apelación y vetos posteriores: Grado 1 (30 días), Grado 2 (90 días) o Grado 3 (indefinido sujeto a revisión).</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">18. Retiro, PKT administrativo, CK y jubilación</span></summary><div class="rb">
+<ul><li><b>Protocolo obligatorio de salida del cuerpo:</b> En caso de salida del cuerpo policial, ya sea por expulsión administrativa o decisión voluntaria, se procederá a realizar un <b>PKT Administrativo</b> roleado mediante la firma de un <b>contrato de confidencialidad</b> (el exagente deberá olvidar y guardar reserva absoluta sobre toda información confidencial y operativa vinculada a su paso por la institución). El incumplimiento de dicho contrato de confidencialidad podrá procesarse como <b>CK más sanción administrativa</b>.</li><li><b>Entrega de material y revisión mandatoria:</b> Antes de ejecutar el PKT Administrativo, el exagente deberá entregar obligatoriamente todo su armamento, equipamiento y material oficial a un alto cargo del cuerpo policial, sometiéndose además a una <b>revisión mandatoria de sus vehículos personales y propiedades</b> para verificar que no conserve armamento ni pertenencias de la institución.</li><li><b>CK Administrativo:</b> Los rangos de mando y personal que maneje información altamente sensible podrán requerir CK Administrativo según lo determine la Directiva y la administración.</li><li><b>Jubilación:</b> Solicitable desde Coronel en adelante con un mínimo de 2 meses OOC de servicio activo. Requiere firma de acuerdo IC de confidencialidad y cooldown de 1 semana sin actividades delictivas. El reingreso posterior se realizará como Oficial salvo disposición distinta de la Directiva.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">19. Cayo Perico / zona roja</span></summary><div class="rb">
+<ul><li>La Policía podrá acudir ante entorno de sujetos armados dirigiéndose a la isla, investigación previa, seguimiento o solicitud de apoyo cerca del puente, ingresando en patrullas con luces y sirenas y publicando anuncio IC.</li><li>En Cayo Perico rigen las reglas de zona roja (pérdida de inventario y PG liberado, excepto Car Kill y disparos desde vehículos). No se solicitará EMS ni códigos de apoyo una vez abatido dentro de la isla, ni se realizarán paradas de tránsito rutinarias.</li><li>Solo se podrá detener personas en el puente o entrada, nunca dentro de la isla. Prohibido robar artículos VIP.</li></ul>
+    </div></details>
+    <details class="rule"><summary><span class="rt">20. Conducta, sanciones y disposición final</span></summary><div class="rb">
+<ul><li>Todo agente deberá mantener una conducta profesional y respetuosa hacia compañeros, superiores y ciudadanos. Las faltas serán investigadas por la Directiva y Asuntos Internos (advertencia, strike, suspensión, pérdida de privilegios, reducción de rango por Directiva o expulsión).</li><li>Si un funcionario sufre crash o timeout durante un enfrentamiento, quedará fuera del rol debiendo esperar 15 minutos y comprobar que el procedimiento finalizó antes de reconectar (devolviendo el botín si lo portaba y su bando perdió).</li><li>Esta normativa entra en vigor para toda la institución de Policía Ghetto RP. La administración conserva la autoridad para interpretar, modificar o resolver situaciones excepcionales.</li></ul>
+    </div></details>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+<div class="wrap">
 <footer>
   <svg viewBox="0 0 64 40" fill="none" stroke="url(#g)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
     <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#ff77c4"/><stop offset="1" stop-color="#3fe6ff"/></linearGradient></defs>
@@ -801,9 +951,32 @@ footer svg{width:44px;height:auto}
 (function(){
   var rules=[].slice.call(document.querySelectorAll('.rule'));
   var q=document.getElementById('q'),box=document.getElementById('results');
-  document.getElementById('open-all').addEventListener('click',function(){rules.forEach(function(r){if(!r.hidden)r.open=true})});
-  document.getElementById('close-all').addEventListener('click',function(){rules.forEach(function(r){r.open=false})});
-  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')}
+  var hero=document.querySelector('.hero'),heroT=document.getElementById('hero-title');
+  var panes={general:document.getElementById('pane-general'),police:document.getElementById('pane-police')};
+  var navs={general:document.getElementById('nav-general'),police:document.getElementById('nav-police')};
+  var titles={general:'Reglamento General',police:'Normativa de la Policía'};
+  var modeBtns=[].slice.call(document.querySelectorAll('.mode'));
+  var mode='general';
+
+  function setMode(m,scroll){
+    mode=m;
+    Object.keys(panes).forEach(function(k){panes[k].hidden=(k!==m);navs[k].hidden=(k!==m)});
+    modeBtns.forEach(function(b){var on=b.getAttribute('data-mode')===m;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false')});
+    heroT.textContent=titles[m];
+    if(scroll)window.scrollTo(0,hero.offsetHeight);
+    onScroll();
+  }
+  modeBtns.forEach(function(b){b.addEventListener('click',function(){setMode(b.getAttribute('data-mode'),true)})});
+
+  [].slice.call(document.querySelectorAll('[data-act]')).forEach(function(b){
+    b.addEventListener('click',function(){
+      var open=b.getAttribute('data-act')==='open';
+      [].slice.call(b.closest('.pane').querySelectorAll('.rule')).forEach(function(r){r.open=open});
+    });
+  });
+
+  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+  function paneOf(r){return r.closest('.pane')}
   q.addEventListener('input',function(){
     var v=norm(q.value.trim());
     box.innerHTML='';
@@ -812,8 +985,8 @@ footer svg{width:44px;height:auto}
     rules.forEach(function(r){
       var t=r.querySelector('.rt').textContent,nt=norm(t),body=r.textContent.replace(/\s+/g,' ').trim(),nb=norm(body),i=nb.indexOf(v);
       if(i<0)return;
-      var s=Math.max(0,i-35),snip=(s>0?'…':'')+body.slice(s,i+v.length+70).trim()+'…';
-      hits.push({r:r,t:t,snip:nt.indexOf(v)>-1?'':snip,rank:nt.indexOf(v)>-1?0:1,sec:r.closest('section').querySelector('h2').textContent});
+      var s=Math.max(0,i-35),snip=(s>0?'…':'')+body.slice(s,i+v.length+70).trim()+'…',inTitle=nt.indexOf(v)>-1;
+      hits.push({r:r,t:t,snip:inTitle?'':snip,rank:inTitle?0:1,sec:paneOf(r).getAttribute('data-label')+' · '+r.closest('section').querySelector('h2').textContent});
     });
     hits.sort(function(a,b){return a.rank-b.rank});
     if(!hits.length){box.innerHTML='<div class="res-none">No hay reglas con “'+q.value.replace(/[<>&]/g,'')+'”.</div>';box.hidden=false;return}
@@ -828,6 +1001,8 @@ footer svg{width:44px;height:auto}
     box.hidden=false;
   });
   function go(r){
+    var m=paneOf(r)===panes.police?'police':'general';
+    if(m!==mode)setMode(m,false);
     box.hidden=true;r.open=true;r.scrollIntoView({block:'start'});
     r.classList.add('flash');setTimeout(function(){r.classList.remove('flash')},1800);
   }
@@ -836,18 +1011,30 @@ footer svg{width:44px;height:auto}
     if(e.key==='Enter'){var f=box.querySelector('.res');if(f)f.click()}
   });
   document.addEventListener('click',function(e){if(!e.target.closest('.search'))box.hidden=true});
-  var links=[].slice.call(document.querySelectorAll('.nav a'));
-  var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
-  var ids=['inicio','normas','general','calle','conceptos','vip'];
-  function setOn(id){links.forEach(function(a){a.classList.remove('on')});if(map[id]){var a=map[id];a.classList.add('on');var bar=a.parentNode;if(bar.scrollWidth>bar.clientWidth){bar.scrollLeft=a.offsetLeft-(bar.clientWidth-a.offsetWidth)/2}}}
+
+  var wasOn=null;
   function onScroll(){
-    var cur='inicio',y=window.scrollY+110;
-    ids.forEach(function(id){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+window.scrollY<=y)cur=id});
-    setOn(cur);
+    var links=[].slice.call(navs[mode].querySelectorAll('a'));
+    var cur=links[0].getAttribute('href').slice(1),y=window.scrollY+110;
+    links.forEach(function(a){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+window.scrollY<=y)cur=id});
+    links.forEach(function(a){
+      var on=a.getAttribute('href')==='#'+cur;a.classList.toggle('on',on);
+      if(on&&wasOn!==cur){wasOn=cur;var bar=a.parentNode;if(bar.scrollWidth>bar.clientWidth){bar.scrollLeft=a.offsetLeft-(bar.clientWidth-a.offsetWidth)/2}}
+    });
   }
   var t=null;
   window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;onScroll()},80)},{passive:true});
-  onScroll();
+
+  function route(){
+    var id=location.hash.slice(1);if(!id)return;
+    var el=document.getElementById(id);if(!el)return;
+    var p=el.closest('.pane');
+    if(p){var m=p===panes.police?'police':'general';if(m!==mode)setMode(m,false)}
+    el.scrollIntoView();
+  }
+  window.addEventListener('hashchange',route);
+  setMode('general',false);
+  route();
 })();
 </script>
 </body>
